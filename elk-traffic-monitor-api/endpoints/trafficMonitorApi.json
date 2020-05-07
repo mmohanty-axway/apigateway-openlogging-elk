@@ -75,6 +75,71 @@
           "required": true
         }
       ]
+    },
+    "/router/service/{serviceID}/ops/{protocol}/{correlationID}/{legID}/getinfo": {
+      "get": {
+        "summary": "GetInfo",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "get-router-service-instance-1-ops-any-e381b15efd0d09ee2ea93375-*-getinfo?format=json&details=1&rheaders=1&sheaders=1",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "query",
+            "name": "format"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "details"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "rheaders"
+          },
+          {
+            "type": "string",
+            "in": "query",
+            "name": "sheaders"
+          }
+        ],
+        "x-flow": "trafficMonitorApi-getRouterServiceOpsGetinfoByServiceIDProtocolCorrelationIDLegID"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "serviceID",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "protocol",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "correlationID",
+          "in": "path",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "legID",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "basePath": "/elk/v1/api"

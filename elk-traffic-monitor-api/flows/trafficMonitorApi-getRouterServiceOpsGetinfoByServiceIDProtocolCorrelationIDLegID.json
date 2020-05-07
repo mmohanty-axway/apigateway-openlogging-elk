@@ -1,0 +1,109 @@
+{
+	"schemaVersion": "4",
+	"info": {
+		"name": "trafficMonitorApi - get /router/service/{serviceID}/ops/{protocol}/{correlationID}/{legID}/getinfo"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "setcontext.2",
+	"nodes": {
+		"setcontext.1": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Set Context",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "array",
+					"value": "[\n\n{\n\t\"details\": {\"uri\":\"/healthcheck\",\"status\":200,\"statustext\":\"OK\",\"method\":\"GET\",\"vhost\":null,\"wafStatus\":0,\"bytesSent\":462,\"bytesReceived\":364,\"remoteName\":\"192.168.152.145\",\"remoteAddr\":\"192.168.152.145\",\"localAddr\":\"192.168.152.145\",\"remotePort\":\"42512\",\"localPort\":\"8080\",\"sslsubject\":null,\"leg\":0,\"timestamp\":1588691427870,\"duration\":1,\"correlationId\":\"e381b15efd0d09ee2ea93375\",\"serviceName\":null,\"subject\":null,\"operation\":null,\"type\":\"http\",\"finalStatus\":\"Pass\"\n\t},\n\t\"rheaders\": [\n{ \"Host\":\"api-env.demo.axway.com:8080\"},\n{ \"User-Agent\":\"Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\"},\n{ \"Accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"},\n{ \"Accept-Language\":\"en-US,en;q=0.5\"},\n{ \"Accept-Encoding\":\"gzip, deflate\"},\n{ \"Connection\":\"keep-alive\"},\n{ \"Upgrade-Insecure-Requests\":\"1\"},\n{ \"Cache-Control\":\"max-age=0\"}\n\t],\n\t\"sheaders\": [\n{ \"Date\":\"Tue, 05 May 2020 15:10:27 GMT\"},\n{ \"Server\":\"Gateway\"},\n{ \"Connection\":\"close\"},\n{ \"X-CorrelationID\":\"Id-e381b15efd0d09ee2ea93375 0\"},\n{ \"Accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"},\n{ \"Accept-Language\":\"en-US,en;q=0.5\"},\n{ \"Cache-Control\":\"max-age=0\"},\n{ \"Host\":\"api-env.demo.axway.com:8080\"},\n{ \"Upgrade-Insecure-Requests\":\"1\"},\n{ \"User-Agent\":\"Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0\"},\n{ \"Content-Type\":\"text/xml\"}\n\t]\n}]",
+					"metaName": "value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.Getinfo.Payload",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
+		},
+		"http.1": {
+			"type": "nodehandler://axway-flow/http",
+			"name": "Set HTTP Response",
+			"method": "setresponse",
+			"parameters": [
+				{
+					"name": "status",
+					"type": "number",
+					"value": "200",
+					"metaName": "status",
+					"metaDescription": "The HTTP status code"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.Getinfo.Payload",
+					"metaName": "body",
+					"metaDescription": "The response payload"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response",
+					"routes": [],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set HTTP Response"
+		},
+		"setcontext.2": {
+			"type": "nodehandler://axway-flow/setcontext",
+			"name": "Set Context",
+			"method": "setcontext",
+			"parameters": [
+				{
+					"name": "value",
+					"type": "string",
+					"value": "\"invalid schema type: opevent\"",
+					"metaName": "value"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.Getinfo.Payload",
+					"routes": [
+						"http.1"
+					],
+					"metaName": "Next"
+				}
+			},
+			"metaMethod": "Set Context"
+		}
+	}
+}
