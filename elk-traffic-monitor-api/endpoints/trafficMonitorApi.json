@@ -76,9 +76,9 @@
         }
       ]
     },
-    "/router/service/{serviceID}/ops/{protocol}/{correlationID}/{legID}/getinfo": {
+    "/router/service/{serviceID}/ops/stream/{transactionID}/*/circuitpath": {
       "get": {
-        "summary": "GetInfo",
+        "summary": "Retrieves circuitpath information",
         "tags": [],
         "responses": {
           "200": {
@@ -89,7 +89,42 @@
             }
           }
         },
-        "operationId": "get-router-service-instance-1-ops-any-e381b15efd0d09ee2ea93375-*-getinfo?format=json&details=1&rheaders=1&sheaders=1",
+        "operationId": "circuitpath",
+        "description": "Retrieves information about the policy filters associated with the specified transactionID and serviceID",
+        "x-flow": "trafficMonitorApi-circuitpath"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "serviceID",
+          "in": "path",
+          "required": true,
+          "description": "instance of the API Gateway e.g.instance-1"
+        },
+        {
+          "type": "string",
+          "name": "transactionID",
+          "in": "path",
+          "required": true,
+          "description": "identifies the transaction"
+        }
+      ]
+    },
+    "/router/service/{serviceID}/ops/{protocol}/{correlationID}/{legID}/getinfo": {
+      "get": {
+        "summary": "Retrieves event information",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "operationId": "getinfo",
+        "x-flow": "trafficMonitorApi-getinfo",
         "parameters": [
           {
             "type": "string",
@@ -112,7 +147,7 @@
             "name": "sheaders"
           }
         ],
-        "x-flow": "trafficMonitorApi-getRouterServiceOpsGetinfoByServiceIDProtocolCorrelationIDLegID"
+        "description": "Retrieves information about events associated with the specified correlationID and legID"
       },
       "parameters": [
         {
